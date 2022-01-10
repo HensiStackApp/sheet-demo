@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1010563306702",
+    "firebase_url": "https://sheetdemo-4ad1a-default-rtdb.firebaseio.com",
+    "project_id": "sheetdemo-4ad1a",
+    "storage_bucket": "sheetdemo-4ad1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010563306702:android:566e6eb1c9a365c132ac9f",
+        "android_client_info": {
+          "package_name": "com.example.sheet_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010563306702-ht2gvlhmfbepv4i0hqssn5erignp20sk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sheet_demo",
+            "certificate_hash": "10c13921c1d1299ad32dea84d34cd3c5b7d2dfb1"
+          }
+        },
+        {
+          "client_id": "1010563306702-bf5g12siiqievbdlr8d23b6olj4fip0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx20hbWtr2WL0zw9COVhXKmrIkdxuUN_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010563306702-bf5g12siiqievbdlr8d23b6olj4fip0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,8 +24,7 @@ class _EditUserState extends State<EditUser> {
   String _fullName = '',
       _emailId = '',
       _mobileNo = '',
-      _dob = '',
-      _password = '';
+      _dob = '';
   bool passwordVisible = false;
   UserBean _userBean;
   TextEditingController _passwordController = TextEditingController();

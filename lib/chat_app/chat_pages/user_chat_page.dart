@@ -1,365 +1,5 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:sheet_widget_demo/fireBase_login/services/user_services.dart';
-// import 'package:sheet_widget_demo/model/userModel.dart';
-// import 'package:sheet_widget_demo/utils/color.dart';
-//
-// class UserChatPage extends StatefulWidget {
-//   final String peerId, name;
-//
-//   const UserChatPage({Key key, this.name, this.peerId}) : super(key: key);
-//
-//   @override
-//   _UserChatPageState createState() => _UserChatPageState();
-// }
-//
-// class _UserChatPageState extends State<UserChatPage> {
-//   TextEditingController msgController = TextEditingController();
-//   List<QueryDocumentSnapshot> listMessage = new List.from([]);
-//   List msg = [];
-//   String groupChatId = '';
-//   UserServices userServices = UserServices();
-//   var users = FirebaseAuth.instance.currentUser;
-//
-//   @override
-//   void initState() {
-//     readLocal();
-//     super.initState();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: PreferredSize(
-//         preferredSize: Size.fromHeight(70),
-//         child: AppBar(
-//           title: Row(
-//             children: <Widget>[
-//               Container(
-//                 width: 50,
-//                 height: 50,
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   border: Border.all(
-//                     color: white,
-//                     width: 3,
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(width: 15),
-//               Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Text(
-//                     widget.name,
-//                     style: Theme.of(context).textTheme.subtitle1,
-//                     overflow: TextOverflow.clip,
-//                   ),
-//                   Text(
-//                     "Online",
-//                     style: Theme.of(context).textTheme.subtitle2.apply(
-//                           color: white,
-//                         ),
-//                   )
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Container(
-//           child: Stack(
-//             children: [chatUi(), bottomBar()],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   bottomBar() {
-//     return Padding(
-//       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.75),
-//       child: Container(
-//         margin: EdgeInsets.all(10.0),
-//         height: 61,
-//         child: Row(
-//           children: <Widget>[
-//             Expanded(
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: white,
-//                   borderRadius: BorderRadius.circular(35.0),
-//                   boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 5, color: grey)],
-//                 ),
-//                 child: Row(
-//                   children: <Widget>[
-//                     // IconButton(icon: Icon(Icons.face), onPressed: () {}),
-//                     Expanded(
-//                       child: Padding(
-//                         padding: const EdgeInsets.only(left: 10.0),
-//                         child: TextFormField(
-//                           controller: msgController,
-//                           decoration: InputDecoration(
-//                               hintText: "Type Something...", border: InputBorder.none),
-//                         ),
-//                       ),
-//                     ),
-//                     IconButton(
-//                       icon: Icon(Icons.photo_camera),
-//                       onPressed: () {},
-//                     ),
-//                     IconButton(
-//                       icon: Icon(Icons.attach_file),
-//                       onPressed: () {},
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             IconButton(
-//                 onPressed: () async {
-//                   if (msgController.text.isNotEmpty) {
-//                     ChatData chatData = ChatData(
-//                       hasUnSeenMsg: true,
-//                       isOnline: false,
-//                       lastMsgTime: DateTime.now(),
-//                       msg: msgController.text,
-//                       msgFrom: users.uid,
-//                       msgTo: widget.peerId,
-//                       seen: false,
-//                       type: 0,
-//                       unseenCount: '1',
-//                     );
-//                     await userServices.createMsg(chatData, groupChatId);
-//                     msgController.clear();
-//                     FocusScope.of(context).requestFocus(FocusNode());
-//                   }
-//                 },
-//                 icon: Icon(Icons.send))
-//             /*Container(
-//               padding: const EdgeInsets.all(15.0),
-//               decoration: BoxDecoration(color: themeColor, shape: BoxShape.circle),
-//               child: InkWell(
-//                 child: Icon(
-//                   Icons.keyboard_voice,
-//                   color: white,
-//                 ),
-//                 onLongPress: () {
-//                   setState(() {
-//                     _showBottom = true;
-//                     */
-//             /*_showBottom
-//                               ? Positioned(
-//                                   bottom: 90,
-//                                   left: 25,
-//                                   right: 25,
-//                                   child: Container(
-//                                     padding: EdgeInsets.all(25.0),
-//                                     decoration: BoxDecoration(
-//                                       color: Colors.white,
-//                                       boxShadow: [
-//                                         BoxShadow(
-//                                             offset: Offset(0, 5),
-//                                             blurRadius: 15.0,
-//                                             color: Colors.grey)
-//                                       ],
-//                                     ),
-//                                     child: GridView.count(
-//                                       mainAxisSpacing: 21.0,
-//                                       crossAxisSpacing: 21.0,
-//                                       shrinkWrap: true,
-//                                       crossAxisCount: 3,
-//                                       children: List.generate(
-//                                         icons.length,
-//                                         (i) {
-//                                           return Container(
-//                                             decoration: BoxDecoration(
-//                                               borderRadius: BorderRadius.circular(15.0),
-//                                               color: grey.shade200,
-//                                               border: Border.all(color: themeColor, width: 2),
-//                                             ),
-//                                             child: IconButton(
-//                                               icon: Icon(
-//                                                 icons[i],
-//                                                 color: themeColor,
-//                                               ),
-//                                               onPressed: () {},
-//                                             ),
-//                                           );
-//                                         },
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 )
-//                               : Container();*/
-//             /*
-//                   });
-//                 },
-//               ),
-//             )*/
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   chatUi() {
-//     if (groupChatId.isNotEmpty) {
-//       return StreamBuilder(
-//           stream: FirebaseFirestore.instance
-//               .collection('msgCollection')
-//               .doc(groupChatId)
-//               .collection(groupChatId)
-//               .orderBy('latMsgTime', descending: true)
-//               .snapshots(),
-//           builder: (context, snapshot) {
-//             print(snapshot.hasData);
-//             if (snapshot.hasData) {
-//               listMessage.addAll(snapshot.data.docs);
-//
-//               print("-->${listMessage.length}");
-//               print("-->${snapshot.data.docs.length}");
-//               return ListView.builder(
-//                   shrinkWrap: true,
-//                   itemCount: snapshot.data.docs.length,
-//                   itemBuilder: (context, index) {
-//                     return Container(
-//                       width: 100,
-//                       height: 100,
-//                       color: Colors.yellow,
-//                     );
-//                   });
-//
-//               // return ListView.builder(
-//               //     shrinkWrap: true,
-//               //     itemCount: snapshot.data.docs.length,
-//               //     itemBuilder: (_, index) {
-//               //       var doc = snapshot.data.docs[index];
-//               //       print("-->");
-//               //       print("-->${snapshot.data.docs.length}");
-//               //       print(doc.get['msg']);
-//               //       return Container(
-//               //         width: 100,
-//               //         height: 100,
-//               //         color: Colors.yellow,
-//               //       );
-//               //       /* return Column(
-//               //       children: [
-//               //         doc['type'] == 1
-//               //             ? Row(
-//               //                 mainAxisAlignment: MainAxisAlignment.start,
-//               //                 children: <Widget>[
-//               //                   Padding(
-//               //                     padding: const EdgeInsets.all(8.0),
-//               //                     child: Container(
-//               //                       constraints: BoxConstraints(
-//               //                           maxWidth: MediaQuery.of(context).size.width * .6),
-//               //                       padding: const EdgeInsets.all(15.0),
-//               //                       decoration: BoxDecoration(
-//               //                         color: themeColor.withOpacity(0.5),
-//               //                         borderRadius: BorderRadius.only(
-//               //                           topRight: Radius.circular(25),
-//               //                           bottomLeft: Radius.circular(25),
-//               //                           bottomRight: Radius.circular(25),
-//               //                         ),
-//               //                       ),
-//               //                       child: Text(
-//               //                         doc['msg'],
-//               //                         // "hello",
-//               //                         style: Theme.of(context).textTheme.bodyText2.apply(
-//               //                               color: Colors.black87,
-//               //                             ),
-//               //                       ),
-//               //                     ),
-//               //                   ),
-//               //                   SizedBox(width: 5),
-//               //                   Text(
-//               //                     doc['lastMsgTime'],
-//               //                     // "${messages[i]['time']}",
-//               //                     // "10:28 AM",
-//               //                     style: Theme.of(context)
-//               //                         .textTheme
-//               //                         .bodyText1
-//               //                         .apply(color: Colors.grey),
-//               //                   ),
-//               //                 ],
-//               //               )
-//               //             : SizedBox(),
-//               //         doc['type'] == 0
-//               //             ? Row(
-//               //                 mainAxisAlignment: MainAxisAlignment.end,
-//               //                 children: <Widget>[
-//               //                   Text(
-//               //                     doc['lastMsgTime'],
-//               //                     // "${messages[i]['time']}",
-//               //                     // "10:28 AM",
-//               //                     style: Theme.of(context)
-//               //                         .textTheme
-//               //                         .bodyText1
-//               //                         .apply(color: Colors.grey),
-//               //                   ),
-//               //                   SizedBox(width: 5),
-//               //                   Padding(
-//               //                     padding: const EdgeInsets.all(8.0),
-//               //                     child: Container(
-//               //                       constraints: BoxConstraints(
-//               //                           maxWidth: MediaQuery.of(context).size.width * .6),
-//               //                       padding: const EdgeInsets.all(15.0),
-//               //                       decoration: BoxDecoration(
-//               //                         color: grey.withOpacity(0.5),
-//               //                         borderRadius: BorderRadius.only(
-//               //                           topRight: Radius.circular(25),
-//               //                           bottomLeft: Radius.circular(25),
-//               //                           topLeft: Radius.circular(25),
-//               //                         ),
-//               //                       ),
-//               //                       child: Text(
-//               //                         doc['msg'],
-//               //                         // "${messages[i]['message']}",
-//               //                         // "hello",
-//               //                         style: Theme.of(context).textTheme.bodyText2.apply(
-//               //                               color: Colors.black87,
-//               //                             ),
-//               //                       ),
-//               //                     ),
-//               //                   ),
-//               //                 ],
-//               //               )
-//               //             : SizedBox(),
-//               //       ],
-//               //     );*/
-//               //     });
-//             } else {
-//               return Center(
-//                 child: CircularProgressIndicator(),
-//               );
-//             }
-//           });
-//     } else {
-//       return Center(
-//         child: CircularProgressIndicator(),
-//       );
-//     }
-//   }
-//
-//   readLocal() async {
-//     var id = users.uid;
-//     if (id.hashCode <= widget.peerId.hashCode) {
-//       groupChatId = '$id-${widget.peerId}';
-//     } else {
-//       groupChatId = '${widget.peerId}-$id';
-//     }
-//     print("{group chat id -->> $groupChatId}");
-//     setState(() {});
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -405,9 +45,7 @@ class _UserChatPageState extends State<UserChatPage> {
     print(currentUser.displayName);
     getAllData().then((value) {
       setState(() {
-        print(value);
         length = value;
-        print(length);
       });
     });
     super.initState();
@@ -420,7 +58,6 @@ class _UserChatPageState extends State<UserChatPage> {
         .collection(groupChatId)
         .orderBy('timestamp', descending: true)
         .get();
-    print(value.docs.length);
     return value.docs.length;
   }
 
@@ -431,7 +68,6 @@ class _UserChatPageState extends State<UserChatPage> {
     } else {
       groupChatId = '${widget.peerId}-$id';
     }
-    print("{group chat id -->> $groupChatId}");
     setState(() {});
   }
 
@@ -614,7 +250,6 @@ class _UserChatPageState extends State<UserChatPage> {
                       content: msgController.text,
                       type: 0,
                     );
-                    print(widget.token);
                     pushNotification(
                         token: widget.token,
                         message: msgController.text,
@@ -705,8 +340,6 @@ class _UserChatPageState extends State<UserChatPage> {
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 listMessage.addAll(snapshot.data.docs);
-                print("-->${listMessage.length}");
-                print("-->${listMessage.length}");
                 return ListView.builder(
                   controller: listScrollController,
                   reverse: true,
@@ -1140,9 +773,8 @@ class _UserChatPageState extends State<UserChatPage> {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization':
-          'key=AAAAa94-gIU:APA91bFROXU3Zm1OlHYLpBaio0MP36F81GdKnHog6N3V5T2vozYQpe1uwg15J31oN5fBse7pSah7i3sXP35keZRPamDyk9SmJ6V0uY0P9x-PlWVWJ6cNUVlv9Agh0rc_osGLuG5ubJWo',
+          'key=AAAA60pEVM4:APA91bEBujN5xDuIMIoSvcBoq2zhrn2MhjX27ibnTQSnEocaxE46gFn45Mf3emf2_yD507_UzgK58UX6dgMlx4MRainiw1uCHbuTANVFyLe9o1HlqfNqwf9DOBdoEPAWpVrq3JO-anUd',
     };
-    print('Headers --> $headers');
     String body = jsonEncode({
       "notification": {
         "body": message,
@@ -1157,7 +789,6 @@ class _UserChatPageState extends State<UserChatPage> {
       },
       "registration_ids": [token]
     });
-    print('body --> $body');
     final response = await http.post(
       Uri.parse(baseUrl),
       headers: headers,

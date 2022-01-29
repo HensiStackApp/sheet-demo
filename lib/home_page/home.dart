@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _select(String language) {
+  void select(String language) {
     print("dd " + language);
 
     setState(() {

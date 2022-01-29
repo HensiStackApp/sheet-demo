@@ -77,23 +77,42 @@ class ProviderApiDemoState extends State<ProviderApiDemo> {
                           ],
                           child: Container(
                             width: MediaQuery.of(context).size.width,
+                            height: 80,
                             margin: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: themeColor,
+                                color: themeColor5,
                                 borderRadius: BorderRadius.circular(12)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(13),
-                                  child: Text(
-                                    " id : ${provider.dataList[index].id}",
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(13),
-                                  child: Text(
-                                      " author : ${provider.dataList[index].author}"),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 100,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          color: themeColor,
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(12),
+                                              topLeft: Radius.circular(12))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(13),
+                                        child: Center(
+                                          child: Text(
+                                            " id : ${provider.dataList[index].id}",
+                                            style: TextStyle(color: themeColor5),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(13),
+                                      child: Text(
+                                        " author : ${provider.dataList[index].author}",
+                                        style: TextStyle(color: themeColor),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

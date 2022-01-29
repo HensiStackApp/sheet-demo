@@ -8,7 +8,6 @@ class PostsBloc extends Bloc<PostsEvents, PostsStates> {
   final http.Client httpClient;
   PostsBloc({this.httpClient}) : super(PostsStates());
 
-  @override
   Stream<PostsStates> mapEventToState(PostsEvents event) async* {
     if (event is FetchedPosts) {
       print('Current state --> ${state.postsStatus}');

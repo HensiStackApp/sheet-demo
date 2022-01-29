@@ -12,7 +12,7 @@ import 'fireBase_login/FireBase_LoginPage.dart';
 import 'fireBase_login/services/auth_services.dart';
 
 class TabBarPage extends StatefulWidget {
-  String userName;
+  final String userName;
   TabBarPage({Key key,this.userName}) : super(key: key);
 
   @override

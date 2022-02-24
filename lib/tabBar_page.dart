@@ -123,7 +123,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
                       width: 50,
                       height: 50,
                       child: Center(
-                          child: Text(getShortName(widget.userName) ?? getShortName(currentUser.displayName)??"")),
+                          child: Text(getShortName(currentUser.displayName) ?? getShortName(widget.userName)??"")),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -133,11 +133,11 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
                       ),
                     ),
                     title: Text(
-                      S.of(context).profile,
+                      currentUser.displayName ?? widget.userName??"",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(widget.userName ?? currentUser.displayName??""),
+                    subtitle: Text(currentUser.email ?? widget.userName??""),
                   ),
                 ),
               ),

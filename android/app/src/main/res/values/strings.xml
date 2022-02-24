@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">sheet_widget_demo</string>
-    <string name="facebook_app_id">3038411349739642</string>
-    <string name="fb_login_protocol_scheme">fb3038411349739642</string>
+<string name="app_name">sheet_widget_demo</string>
+<string name="facebook_app_id">506249814551962</string>
+<string name="fb_login_protocol_scheme">fb506249814551962</string>
+<string name="facebook_client_token">99f0fb40c493e03a1df285322cd53954</string>
 </resources>

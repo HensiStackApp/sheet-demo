@@ -10,6 +10,7 @@ import 'package:sheet_widget_demo/choiceChip_page/choiceChip.dart';
 import 'package:sheet_widget_demo/commonWidget/commonButton.dart';
 import 'package:sheet_widget_demo/fireBase_login/services/auth_services.dart';
 import 'package:sheet_widget_demo/fireBase_login/services/user_services.dart';
+import 'package:sheet_widget_demo/flick%20plyer/Flick_player_home.dart';
 import 'package:sheet_widget_demo/generated/l10n.dart';
 import 'package:sheet_widget_demo/geoLocation/locationPage.dart';
 import 'package:sheet_widget_demo/hideShow_page/hideShowWidget.dart';
@@ -309,6 +310,13 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+                button(context, 'flick player', () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FlickPlayerHome(),
+                      ));
+                }),
                 button(context, S.of(context).dateTimePicker, () {
                   Navigator.push(
                       context,

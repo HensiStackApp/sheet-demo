@@ -35,6 +35,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var users = FirebaseAuth.instance.currentUser;
   Locale _locale;
+
   setLocale(Locale value) {
     setState(() {
       _locale = value;
@@ -60,7 +61,11 @@ class _MyAppState extends State<MyApp> {
             accentColor: themeColor,
             fontFamily: 'NunitoSans'),
         debugShowCheckedModeBanner: false,
-        home: (users == null) ? LogInPage() : TabBarPage(userName: "abc",),
+        home: (users == null)
+            ? LogInPage()
+            : TabBarPage(
+                userName: "abc",
+              ),
         builder: EasyLoading.init(),
       ),
     );

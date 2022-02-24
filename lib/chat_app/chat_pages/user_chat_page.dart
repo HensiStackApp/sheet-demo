@@ -93,13 +93,6 @@ class _UserChatPageState extends State<UserChatPage> {
     });
   }
 
-  // static String returnTime(DateTime dt) {
-  //   final DateFormat formatter = DateFormat('h:mm a');
-  //   // final DateFormat formatter = DateFormat('d MMM ,h:mm a');
-  //   String time = formatter.format(dt);
-  //   return time;
-  // }
-
   String getVerboseDateTimeRepresentation(DateTime dateTime) {
     DateTime now = DateTime.now();
     DateTime yesterday = now.subtract(Duration(days: 1));
@@ -344,10 +337,10 @@ class _UserChatPageState extends State<UserChatPage> {
                   controller: listScrollController,
                   reverse: true,
                   shrinkWrap: true,
-                  // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   padding: EdgeInsets.all(10.0),
-                  itemBuilder: (context, index) =>
-                      buildItem(index, snapshot.data.docs[index]),
+                  itemBuilder: (context, index) {
+                    return buildItem(index, snapshot.data.docs[index]);
+                  },
                   itemCount: snapshot.data.docs.length,
                 );
               } else {
@@ -360,126 +353,7 @@ class _UserChatPageState extends State<UserChatPage> {
           );
   }
 
-  /* Widget buildItem(int index, DocumentSnapshot document) {
-    if (document != null) {
-      if (document.get('idFrom') == users) {
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  returnTime(document.get('timestamp').toDate()).toString(),
-                  style: Theme.of(context).textTheme.bodyText1.apply(color: Colors.grey),
-                ),
-                SizedBox(width: 5),
-                document.get('type') == 0
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          constraints:
-                              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .6),
-                          padding: const EdgeInsets.all(15.0),
-                          decoration: BoxDecoration(
-                            color: grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              bottomLeft: Radius.circular(25),
-                              topLeft: Radius.circular(25),
-                            ),
-                          ),
-                          child: Text(
-                            document.get('content'),
-                            style: Theme.of(context).textTheme.bodyText2.apply(
-                                  color: Colors.black87,
-                                ),
-                          ),
-                        ),
-                      )
-                    : document.get('type') == 1
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PhotoviewPage(
-                                                imgUrl: document.get('content'),
-                                              )));
-                                },
-                                child: Image.network(
-                                  document.get('content'),
-                                ),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-              ],
-            )
-          ],
-        );
-      } else {
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            document.get('type') == 0
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .6),
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        color: themeColor.withOpacity(0.5),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                        ),
-                      ),
-                      child: Text(
-                        document.get('content'),
-                        style: Theme.of(context).textTheme.bodyText2.apply(
-                              color: Colors.black87,
-                            ),
-                      ),
-                    ),
-                  )
-                : document.get('type') == 1
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PhotoviewPage(
-                                            imgUrl: document.get('content'),
-                                          )));
-                            },
-                            child: Image.network(
-                              document.get('content'),
-                            ),
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
-            SizedBox(width: 5),
-            Text(
-              returnTime(document.get('timestamp').toDate()).toString(),
-              style: Theme.of(context).textTheme.bodyText1.apply(color: Colors.grey),
-            ),
-          ],
-        );
-      }
-    }
-  }*/
-
-  Widget buildItem(int index, DocumentSnapshot document) {
+  Widget buildItem(index, DocumentSnapshot document) {
     if (document != null) {
       if (document.get('idFrom') == users) {
         // Right (my message)
@@ -488,11 +362,6 @@ class _UserChatPageState extends State<UserChatPage> {
             children: [
               Row(
                 children: <Widget>[
-                  // Text(
-                  //   getVerboseDateTimeRepresentation(document.get('timestamp').toDate()).toString(),
-                  //   style: Theme.of(context).textTheme.bodyText1.apply(color: Colors.grey),
-                  // ),
-                  // SizedBox(width: 5),
                   document.get('type') == 0
                       // Text
                       ? Flexible(
@@ -549,7 +418,6 @@ class _UserChatPageState extends State<UserChatPage> {
                                   MaterialPageRoute(
                                     builder: (context) => PhotoviewPage(
                                       imgUrl: document.get('content'),
-                                      // appbarText: 'Full Photo'
                                     ),
                                   ),
                                 );
@@ -673,11 +541,6 @@ class _UserChatPageState extends State<UserChatPage> {
                               ),
                             )
                           : Container(),
-                  // SizedBox(width: 5),
-                  // Text(
-                  //   getVerboseDateTimeRepresentation(document.get('timestamp').toDate()).toString(),
-                  //   style: Theme.of(context).textTheme.bodyText1.apply(color: Colors.grey),
-                  // ),
                 ],
               ),
             ],
